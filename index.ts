@@ -14,22 +14,22 @@ const ae = new ArtEngine({
   useCache: false,
 
   inputs: {
-    apes: new inputs.ImageLayersInput({
+    art: new inputs.ImageLayersInput({
       assetsBasePath: `${BASE_PATH}/../data`,
     }),
   },
 
   generators: [
     new generators.ImageLayersAttributesGenerator({
-      dataSet: "apes",
+      dataSet: "art",
       startIndex: 1,
-      endIndex: 10,
+      endIndex: 20,
     }),
   ],
 
   renderers: [
     new renderers.ItemAttributesRenderer({
-      name: (itemUid: string) => `Ape ${itemUid}`,
+      name: (itemUid: string) => `Art ${itemUid}`,
       description: (attributes: any) => {
         return `This is a token with "${attributes["Background"][0]}" as Background`;
       },
@@ -47,9 +47,9 @@ const ae = new ArtEngine({
     }),
     new exporters.SolMetadataExporter({
       imageUriPrefix: "ipfs://__CID__/",
-      symbol: "APES",
+      symbol: "Art",
       sellerFeeBasisPoints: 200,
-      collectionName: "The Apes",
+      collectionName: "The Art",
       creators: [
         {
           address: "__SOLANA_WALLET_ADDRESS_HERE__",

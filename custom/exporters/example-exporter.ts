@@ -13,6 +13,10 @@ export class ExampleExporter implements ExporterInterface {
   public async init(props: ExporterInitPropsInterface) {
     this.rendersGetter = props.rendersGetter;
     this.outputPath = props.outputPath;
+
+    if (!fs.existsSync(this.outputPath)) {
+      fs.mkdirSync(this.outputPath);
+    }
   }
 
   public async export(): Promise<void> {

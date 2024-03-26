@@ -5,3 +5,5 @@ cache/_temp
 cache
 output
 dist
+
+.DS_store
