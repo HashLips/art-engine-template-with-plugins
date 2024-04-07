@@ -13,6 +13,11 @@
   },
   "dependencies": {
     "@hashlips-lab/art-engine": "^2.0.0-alpha7",
+    "puppeteer": "^22.6.2",
+    "random-seed": "^0.3.0",
     "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/random-seed": "^0.3.5"
   }
 }

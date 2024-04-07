@@ -1,10 +1,10 @@
-const {
-  ArtEngine,
-  inputs,
-  generators,
-  renderers,
-  exporters,
-} = require("@hashlips-lab/art-engine");
+import { HtmlExporter } from "./custom/exporters/html-exporter";
+import { HtmlToPngExporter } from "./custom/exporters/html-to-png-exporter";
+import { HtmlLayersAttributesGenerator } from "./custom/generators/html-layers-attributes-generator";
+import { HtmlLayersInput } from "./custom/inputs/html-layers-input";
+import { HtmlLayersRenderer } from "./custom/renderers/html-layers-renderer";
+
+const { ArtEngine, renderers, exporters } = require("@hashlips-lab/art-engine");
 
 const BASE_PATH = __dirname;
 
@@ -14,14 +14,14 @@ const ae = new ArtEngine({
   useCache: false,
 
   inputs: {
-    art: new inputs.ImageLayersInput({
-      assetsBasePath: `${BASE_PATH}/../data`,
+    html: new HtmlLayersInput({
+      assetsBasePath: `${BASE_PATH}/../elements`,
     }),
   },
 
   generators: [
-    new generators.ImageLayersAttributesGenerator({
-      dataSet: "art",
+    new HtmlLayersAttributesGenerator({
+      dataSet: "html",
       startIndex: 1,
       endIndex: 20,
     }),
@@ -29,33 +29,19 @@ const ae = new ArtEngine({
 
   renderers: [
     new renderers.ItemAttributesRenderer({
-      name: (itemUid: string) => `Art ${itemUid}`,
+      name: (itemUid: string) => `html ${itemUid}`,
       description: (attributes: any) => {
-        return `This is a token with "${attributes["Background"][0]}" as Background`;
+        return `This is a pure html and css artwork`;
       },
     }),
-    new renderers.ImageLayersRenderer({
-      width: 2048,
-      height: 2048,
-    }),
+    new HtmlLayersRenderer(),
   ],
 
   exporters: [
-    new exporters.ImagesExporter(),
+    new HtmlExporter(),
+    // new HtmlToPngExporter({ width: 1920, height: 1080 }),
     new exporters.Erc721MetadataExporter({
       imageUriPrefix: "ipfs://__CID__/",
-    }),
-    new exporters.SolMetadataExporter({
-      imageUriPrefix: "ipfs://__CID__/",
-      symbol: "Art",
-      sellerFeeBasisPoints: 200,
-      collectionName: "The Art",
-      creators: [
-        {
-          address: "__SOLANA_WALLET_ADDRESS_HERE__",
-          share: 100,
-        },
-      ],
     }),
   ],
 });
